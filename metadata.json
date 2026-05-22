@@ -1,0 +1,6 @@
+{
+  "name": "Social API Hub & Automator",
+  "description": "An advanced AI-powered dashboard for automated social media API simulations, search-grounded scraping, and multi-network post formulation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
