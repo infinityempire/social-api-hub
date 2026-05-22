@@ -253,6 +253,35 @@ export default function App() {
     setPublishing(true);
     addLog("Publisher", "info", "מאתחל סדרת פרסום אוטומטית לכל הרשתות שנבחרו...");
 
+    const eventSource = new EventSource(`/api/run-delta?topic=${encodeURIComponent(scrapeKeyword)}`);
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === "done") {
+          eventSource.close();
+          setPublishing(false);
+          addLog("System", "success", "תהליך ההפצה האוטומטי הושלם עבור כל הרשתות החברתיות!");
+        } else {
+          addLog(data.platform || "Delta Agent", data.type, data.message, data.payload);
+        }
+      } catch (e) {
+        console.error("SSE Parse Error:", e);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("SSE Error:", error);
+      eventSource.close();
+      setPublishing(false);
+      addLog("System", "error", "שגיאה בחיבור לשרת ההפצה.");
+    };
+    return;
+
+    if (!generatedOmnipost) return;
+    setPublishing(true);
+    addLog("Publisher", "info", "מאתחל סדרת פרסום אוטומטית לכל הרשתות שנבחרו...");
+
     // Stage 1: Github Gist/Release API
     setTimeout(() => {
       addLog("GitHub API", "info", "שולח בקשה: POST https://api.github.com/gists ...");
