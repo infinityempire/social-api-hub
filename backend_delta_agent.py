@@ -121,7 +121,7 @@ async def fill_upload_form(page: Page, network: NetworkConfig, media_path: str, 
 
 
 async def wait_for_manual_approval(page: Page, network: NetworkConfig) -> bool:
-    emit("warning", "הפוסט מוכן להעלאה! מחכה לאישור ידני של המנכ\"ל...")
+    emit("warning", "💥 [🚨 Terminal Radar] הפוסט מוכן להעלאה! מחכה לאישור ידני של המנכ\"ל...")
     start_url = page.url
     deadline = time.monotonic() + (MANUAL_APPROVAL_TIMEOUT_MS / 1000)
 
